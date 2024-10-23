@@ -2,20 +2,20 @@ package com.unu.proyectwebGB.beans;
 
 public class Autor {
 
-	private int idAutor;
-	private String nacionalidad;
-	private String nombre;
-
-	public Autor() {
-		this(0, "", "");
-	}
-
 	public Autor(int idAutor, String nombre, String nacionalidad) {
 		super();
 		this.idAutor = idAutor;
 		this.nacionalidad = nacionalidad;
 		this.nombre = nombre;
 	}
+
+	public Autor() {
+		this(0, "", "");
+	}
+
+	private int idAutor;
+	private String nacionalidad;
+	private String nombre;
 
 	public int getIdAutor() {
 		return idAutor;
@@ -40,8 +40,5 @@ public class Autor {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	
-	
 
 }

@@ -6,7 +6,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Iterator;
 
+import com.unu.proyectwebGB.beans.Autor;
 import com.unu.proyectwebGB.models.AutoresModel;
 
 /**
@@ -14,7 +16,8 @@ import com.unu.proyectwebGB.models.AutoresModel;
  */
 public class AutoresController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	AutoresModel modelo= new AutoresModel();
+	AutoresModel modelo = new AutoresModel();
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -23,30 +26,50 @@ public class AutoresController extends HttpServlet {
 		// TODO Auto-generated constructor stub
 	}
 
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
-
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
 		if (request.getParameter("op") == null) {
-			// listar()
+			listar(request, response);
 			return;
 		}
 		String operacion = request.getParameter("op");
 		switch (operacion) {
+
 		case "listar":
-			// listar()
+			listar(request, response);
 			break;
 
 		case "nuevo":
-			// nuevo()
-			break;
+			
+			request.getRequestDispatcher("/autores/nuevoAutor.jsp").forward(request, response);
+			 break;
+
+
+			
+
 		}
 	}
 
-
-	
-	private void listar(HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("listaAutores",modelo.listaAutores());
-		request.getRequestDispatcher("/autores/listaAutores.jsp");
+	private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			request.setAttribute("listaAutores", modelo.listarAutores());
+			Iterator<Autor> it = modelo.listarAutores().iterator();
+			while (it.hasNext()) {
+				Autor a = it.next();
+				System.out.println(a.getIdAutor() + " " + a.getNombre() + " " + a.getNacionalidad());
+			}
+			request.getRequestDispatcher("/autores/listaAutores.jsp").forward(request, response);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
+	}
+
+	private void nuevo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+
 	}
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -55,7 +78,8 @@ public class AutoresController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		// response.getWriter().append("Served at: ").append(request.getContextPath());
+		processRequest(request, response);
 	}
 
 	/**
@@ -65,7 +89,7 @@ public class AutoresController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		processRequest(request, response);
 	}
 
 }
