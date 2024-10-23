@@ -28,7 +28,7 @@ public class AutoresController extends HttpServlet {
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
+		
 		if (request.getParameter("op") == null) {
 			listar(request, response);
 			return;
@@ -40,7 +40,7 @@ public class AutoresController extends HttpServlet {
 			listar(request, response);
 			break;
 
-		case "nuevo":
+case "nuevo":
 			
 			request.getRequestDispatcher("/autores/nuevoAutor.jsp").forward(request, response);
 			 break;
@@ -66,11 +66,7 @@ public class AutoresController extends HttpServlet {
 		
 	}
 
-	private void nuevo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-
-	}
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
