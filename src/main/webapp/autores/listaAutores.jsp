@@ -41,7 +41,8 @@ String url = "http://localhost:8080/proyectwebGB/";
 				 <td><%= autor.getIdAutor()%></td>
 				 <td><%= autor.getNombre()%></td>
 				 <td><%= autor.getNacionalidad() %></td>
-				 
+				 <td>
+				 <a href = "<%=url%>AutoresController?op=obtener&id=<%= autor.getIdAutor()%>">modificar</a>
 			 </tr>
         <%
             }
@@ -61,8 +62,10 @@ String url = "http://localhost:8080/proyectwebGB/";
 			
 		
  	</tbody>
- </table>
+ 	
 
+ </table>
+<a type = "button" href = "<%=url%>AutoresController">  Volver</a>
 </head>
 <body>
 

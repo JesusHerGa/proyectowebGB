@@ -28,7 +28,7 @@ public class AutoresController extends HttpServlet {
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		if (request.getParameter("op") == null) {
 			listar(request, response);
 			return;
@@ -40,13 +40,22 @@ public class AutoresController extends HttpServlet {
 			listar(request, response);
 			break;
 
-case "nuevo":
-			
+		case "nuevo":
+
 			request.getRequestDispatcher("/autores/nuevoAutor.jsp").forward(request, response);
-			 break;
-
-
-			
+			break;
+		case "insertar":
+			insertar(request, response);
+			break;
+		case "obtener":
+			obtener(request, response);
+			break;
+		case "modificar":
+			modificar(request, response);
+			break;	
+		case "eliminar":
+			eliminar(request, response);
+			break;	
 
 		}
 	}
@@ -63,10 +72,79 @@ case "nuevo":
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+
+	}
+	private void insertar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		try {
+			Autor miAutor= new Autor();
+			miAutor.setNombre(request.getParameter("nombre"));
+			miAutor.setNacionalidad(request.getParameter("nacionalidad"));
+			if(modelo.insertarAutor(miAutor)>0) {
+				request.getSession().setAttribute("exito","autor registrado satisfactoriamente");
+								
+			}
+			else {
+				request.getSession().setAttribute("fracaso","autor NO registrado satisfactoriamente");
+				
+			}
+			response.sendRedirect(request.getContextPath()+"/AutoresController?op=listar");
+		} catch (Exception ex) {
+			ex.getStackTrace();
+		}
+	}
+	private void obtener(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		try {
+			String id = request.getParameter("id");
+			Autor miAutor= modelo.obtenerAutor(Integer.parseInt(id));
+			if(miAutor!= null) {
+				request.setAttribute("autor", miAutor);
+				request.getRequestDispatcher("/autores/editarAutor.jsp").forward(request, response);
+				}
+			else {
+				response.sendRedirect(request.getContextPath()+"/error404.jsp");
+			}
+			
+		} catch (Exception ex) {
+			
+		}
+	}
+	private void modificar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		try {
+			Autor miAutor= new Autor();
+			miAutor.setNombre(request.getParameter("nombre"));
+			miAutor.setNacionalidad(request.getParameter("nacionalidad"));
+			if(modelo.insertarAutor(miAutor)>0) {
+				request.getSession().setAttribute("exito","autor registrado satisfactoriamente");
+								
+			}
+			else {
+				request.getSession().setAttribute("fracaso","autor NO registrado satisfactoriamente");
+				
+			}
+			response.sendRedirect(request.getContextPath()+"/AutoresController?op=listar");
+		} catch (Exception ex) {
+			ex.getStackTrace();
+		}
+	}
+	
+	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		try {
+			int idautor = Integer.parseInt(request.getParameter("id"));
+			if(modelo.eliminarAutor(idautor)>0) {
+				request.getSession().setAttribute("exito","autor eliminado satisfactoriamente");
+			}
+			else {
+				request.getSession().setAttribute("fracaso","autor NO eliminado satisfactoriamente");
+			}
+			response.sendRedirect(request.getContextPath()+"/AutoresController?op=listar");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 	}
-
-	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
