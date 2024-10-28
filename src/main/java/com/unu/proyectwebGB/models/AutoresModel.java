@@ -68,6 +68,7 @@ public class AutoresModel extends conexion{
 			this.abrirConexion();
 			cs = conexion.prepareCall(sql);
 			cs.setInt(1,idautor);
+			rs= cs.executeQuery();
 			if(rs.next()) {
 				//Autor autor = new Autor();
 				autor = new Autor();
@@ -75,22 +76,24 @@ public class AutoresModel extends conexion{
 				autor.setNombre(rs.getString("nombre"));
 				autor.setNacionalidad(rs.getString("nacionalidad"));
 				this.cerrarConexion();
+				return autor;
 				
 			}
-			
+			return null;
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			// TODO: handle exception
 			this.cerrarConexion();
 			return null;
 		}
-		return autor ;
+		
 	}
 
 	public int modificarAutor(Autor autor) throws SQLException {
 		try {
 			int filasAfectadas = 0;
-			String sql = "CALL sp_modificarAutor(?,?,?,?)";
+			String sql = "CALL sp_modificarAutor(?,?,?)";
 			this.abrirConexion();
 			cs = conexion.prepareCall(sql);
 			cs.setInt(1, autor.getIdAutor());

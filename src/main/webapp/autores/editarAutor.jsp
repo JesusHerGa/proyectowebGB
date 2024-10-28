@@ -17,22 +17,28 @@
 		autor = new Autor();
 	else{
 		autor = (Autor)request.getAttribute("autor");
-		
+		System.out.println(autor.getIdAutor());
+		System.out.println(autor.getNombre());
+		System.out.println(autor.getNacionalidad());
+
 	}
 	
-	
 	%>
-	<h3>Nuevo Autor</h3>
+	<h3>Editar Autor</h3>
 
 	<form role="form" action="<%=url%>AutoresController" method="POST">
 
 		<input type="hidden" name="op" value="modificar">
 		<input type="hidden" name="id" value="<%=autor.getIdAutor()%>"> <label
+		
 			form ="nombre">Nombre del autor</label> <input type="text"
-			name="nombre" id="nombre" value="<%=autor.getNombre() %>"/> <br> <label
-			form ="nacionalidad" value="<%=autor.getNacionalidad()%>"/>Nacionalidad</label> <input type="text"
-			name="nacionalidad" id="nacionalidad"> <br> <input
-			type="submit" value="Guardar" name="Guardar">
+			name="nombre" id="nombre" value="<%=autor.getNombre() %>"/> <br> 
+			
+			<label form ="nacionalidad" >Nacionalidad </label> 
+			
+			<input type="text"name="nacionalidad" id="nacionalidad" value="<%=autor.getNacionalidad()%>"> <br> 
+			
+			<input type="submit" value="Guardar" name="Guardar">
 			
 			 <a type="button" href="<%=url%>AutoresController?op=listar"> Volver</a>
 

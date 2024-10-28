@@ -1,29 +1,23 @@
 package com.unu.proyectwebGB.controllers;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.Iterator;
 
 import com.unu.proyectwebGB.beans.Autor;
-import com.unu.proyectwebGB.models.AutoresModel;
+import com.unu.proyectwebGB.models.EditorialesModel;
 
-/**
- * Servlet implementation class AutoresController
- */
-public class AutoresController extends HttpServlet {
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+public class EditorialesController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	AutoresModel modelo = new AutoresModel();
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public AutoresController() {
+	EditorialesModel modelo = new EditorialesModel();
+	
+	public EditorialesController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -42,7 +36,7 @@ public class AutoresController extends HttpServlet {
 
 		case "nuevo":
 
-			request.getRequestDispatcher("/autores/nuevoAutor.jsp").forward(request, response);
+			request.getRequestDispatcher("/editoriales/nuevoEditorial.jsp").forward(request, response);
 			break;
 		case "insertar":
 			insertar(request, response);
@@ -136,7 +130,7 @@ public class AutoresController extends HttpServlet {
 	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		try {
 			int idautor = Integer.parseInt(request.getParameter("id"));
-			if(modelo.eliminarAutor(idautor)>0) {
+			if(modelo.eliminarAutor(idautor)> 0) {
 				request.getSession().setAttribute("exito","autor eliminado satisfactoriamente");
 			}
 			else {
@@ -168,5 +162,6 @@ public class AutoresController extends HttpServlet {
 		// TODO Auto-generated method stub
 		processRequest(request, response);
 	}
-
+	
+	
 }
