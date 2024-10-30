@@ -8,23 +8,43 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
+<link rel="stylesheet"
+href="assets/css/bootstrap.min.css">
+<script src="assets/js/bootstrap.min.css.js">
+</script>
+
+<script >
+function eliminar(id) {
+	if(confirm("Desea Eliminar el registro")== true){
+		location.href= "AutoresController?op=eliminar&id="+id;
+	}
+	else{
+		
+	}
+		
+	
+}
+</script>
+
 <title>ListarAutores</title>
 
 
 <%
 String url = "http://localhost:8080/proyectwebGB/";
 %>
-<a type = "button" href = "<%=url%>AutoresController?op=nuevo">  Nuevo Autor</a>
 
+<div class="container">
 
+<a type = "button" class="btn btn-primary" href = "<%=url%>AutoresController?op=nuevo">  Nuevo Autor</a>
 
-
-<table id="tabla" border="1">
-	 <thead>
+<table class="table">
+  <thead class="table-dark">
+	 
 		 <tr>
 			<th>Codigo del autor</th>
-			<th>Nacionalidad</th>
 			<th>Nombre del autor</th>
+			<th>Nacionalidad</th>
 			<th>Operaciones</th>
 		 </tr>
 	 </thead>
@@ -42,8 +62,10 @@ String url = "http://localhost:8080/proyectwebGB/";
 				 <td><%= autor.getNombre()%></td>
 				 <td><%= autor.getNacionalidad() %></td>
 				 <td>
-				 <a type = "button" href = "<%=url%>AutoresController?op=obtener&id=<%=autor.getIdAutor()%>">modificar</a>
-				 <a type = "button" href = "<%=url%>AutoresController?op=eliminar&id=<%=autor.getIdAutor()%>">eliminar</a>
+				 <a type ="button" class="btn btn-success" href = "<%=url%>AutoresController?op=obtener&id=<%=autor.getIdAutor()%>">modificar</a>
+				 <!--<a type="button" class="btn btn-danger" href = "<%=url%>AutoresController?op=eliminar&id=<%=autor.getIdAutor()%>">eliminar</a> 
+				 -->
+				 <a href="javascript:eliminar('<%=autor.getIdAutor()%>')" class="btn btn-danger">Eliminar</a>
 				 </td>
 			 </tr>
         <%
@@ -67,7 +89,12 @@ String url = "http://localhost:8080/proyectwebGB/";
  	
 
  </table>
-<a type = "button" href = "<%=url%>AutoresController">  Volver</a>
+<a type = "button" class="btn btn-secondary" href = "<%=url%>AutoresController">  Actualizar</a>
+</div>
+
+
+
+
 </head>
 <body>
 

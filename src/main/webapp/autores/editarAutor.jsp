@@ -5,7 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>nuevo autor</title>
+<link rel="stylesheet"
+href="assets/css/bootstrap.min.css">
+<script src="assets/js/bootstrap.min.css.js">
+</script>
+
+<title>Editar Autor</title>
 </head>
 <body>
 
@@ -24,27 +29,27 @@
 	}
 	
 	%>
+	
+	<div class= "container">
 	<h3>Editar Autor</h3>
 
 	<form role="form" action="<%=url%>AutoresController" method="POST">
 
 		<input type="hidden" name="op" value="modificar">
-		<input type="hidden" name="id" value="<%=autor.getIdAutor()%>"> <label
-		
-			form ="nombre">Nombre del autor</label> <input type="text"
-			name="nombre" id="nombre" value="<%=autor.getNombre() %>"/> <br> 
+		<input type="hidden" name="id" value="<%=autor.getIdAutor()%>">
+		 <label	form ="nombre">Nombre del autor</label> 
+			<input type="text"	name="nombre" id="nombre" value="<%=autor.getNombre() %>"/> <br> 
 			
 			<label form ="nacionalidad" >Nacionalidad </label> 
 			
 			<input type="text"name="nacionalidad" id="nacionalidad" value="<%=autor.getNacionalidad()%>"> <br> 
 			
-			<input type="submit" value="Guardar" name="Guardar">
+			<input type="submit" class="btn btn-primary" value="Guardar" name="Guardar">
 			
-			 <a type="button" href="<%=url%>AutoresController?op=listar"> Volver</a>
+			 <a type="button" class="btn btn-secondary" href="<%=url%>AutoresController?op=listar"> Volver</a>
 
 	</form>
-
-
+</div>
 
 </body>
 </html>

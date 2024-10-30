@@ -136,7 +136,7 @@ public class AutoresController extends HttpServlet {
 	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		try {
 			int idautor = Integer.parseInt(request.getParameter("id"));
-			if(modelo.eliminarAutor(idautor)>0) {
+			if(modelo.eliminarAutor(idautor)> 0) {
 				request.getSession().setAttribute("exito","autor eliminado satisfactoriamente");
 			}
 			else {

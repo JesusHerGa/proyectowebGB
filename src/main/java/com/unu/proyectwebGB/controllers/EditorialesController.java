@@ -1,10 +1,11 @@
 package com.unu.proyectwebGB.controllers;
-
+import jakarta.servlet.ServletException;
 
 import java.io.IOException;
 import java.util.Iterator;
 
 import com.unu.proyectwebGB.beans.Autor;
+import com.unu.proyectwebGB.beans.Editorial;
 import com.unu.proyectwebGB.models.EditorialesModel;
 
 import jakarta.servlet.ServletException;
@@ -57,11 +58,11 @@ public class EditorialesController extends HttpServlet {
 
 	private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			request.setAttribute("listaAutores", modelo.listarAutores());
-			Iterator<Autor> it = modelo.listarAutores().iterator();
+			request.setAttribute("listaEditoriales", modelo.listarEditorial());
+			Iterator<Autor> it = modelo.listarEditoriales().iterator();
 			while (it.hasNext()) {
-				Autor a = it.next();
-				System.out.println(a.getIdAutor() + " " + a.getNombre() + " " + a.getNacionalidad());
+				Editorial a = it.next();
+				System.out.println(a.getIdEditorial() + " " + a.getNombre() + " " + a.getContacto()+ " " + a.getTelefono());
 			}
 			request.getRequestDispatcher("/autores/listaAutores.jsp").forward(request, response);
 		} catch (Exception e) {
