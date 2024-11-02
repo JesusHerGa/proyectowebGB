@@ -9,7 +9,7 @@ public class conexion {
 	    
 		private String url = "jdbc:mysql://localhost:3306/bibliotecapoo2ga"; // URL de la base de datos
 	    private String usuario = "root"; // Usuario de la base de datos
-	    private String contrasena = "123456"; // Contraseña de la base de datos
+	    private String contrasena = ""; // Contraseña de la base de datos
 	    protected Connection conexion;
 
 	    // Método para abrir la conexión

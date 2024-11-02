@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.unu.proyectwebGB.beans.Autor;
+import com.unu.proyectwebGB.beans.Editorial;
 
 
 public class EditorialesModel extends conexion{
@@ -20,34 +21,37 @@ public class EditorialesModel extends conexion{
 		public List<Editorial> listarEditoriales() throws SQLException{
 			 try {
 					 List<Editorial> lista = new ArrayList<>();
-					 String sql = "CALL sp_listarAutores()";
+					 String sql = "CALL sp_listarEditoriales()";
 					 this.abrirConexion();
 					 cs = conexion.prepareCall(sql);
 					 rs = cs.executeQuery();
 					 while(rs.next()){
-					 Autor autor = new Autor();
-					 autor.setIdAutor(rs.getInt("idautor"));
-					 autor.setNombre(rs.getString("nombre"));
-					 autor.setNacionalidad(rs.getString("nacionalidad"));
-					 lista.add(autor);
+					 Editorial editorial = new Editorial();
+					 editorial.setIdEditorial(rs.getInt("ideditorial"));
+					 editorial.setNombre(rs.getString("nombre"));
+					 editorial.setContacto(rs.getString("contacto"));
+					 editorial.setTelefono(rs.getString("telefono"));
+					 lista.add(editorial);
+						
 				 }
 				 this.cerrarConexion();
 				 return lista;
 				 } catch (SQLException ex) {
-				 Logger.getLogger(AutoresModel.class.getName()).log(Level.SEVERE, null, ex);
+				 Logger.getLogger(EditorialesModel.class.getName()).log(Level.SEVERE, null, ex);
 				 this.cerrarConexion();;
 				 return null;
 				 }
 				 }
 
-		public int insertarAutor(Autor autor) {
+		public int insertarEditorial(Editorial editorial) {
 			try {
 				int filasAfectadas=0;
-				String sql = "CALL sp_insertarAutor(?,?)";
+				String sql = "CALL sp_insertarEditorial(?,?,?)";
 				this.abrirConexion();
 				cs = conexion.prepareCall(sql);
-				cs.setString(1, autor.getNombre());
-				cs.setString(2, autor.getNacionalidad());
+				cs.setString(1, editorial.getNombre());
+				cs.setString(2, editorial.getContacto());
+				cs.setString(3, editorial.getTelefono());
 				filasAfectadas = cs.executeUpdate();
 				this.cerrarConexion();
 				return filasAfectadas;
@@ -59,23 +63,24 @@ public class EditorialesModel extends conexion{
 			
 			
 		}
-		public Autor obtenerAutor(int idautor) {
-			Autor autor = null;
+		public Editorial obtenerEditorial(int ideditorial) {
+			Editorial editorial = null;
 			try {
 				
-				String sql = "CALL sp_obtenerAutor(?)";
+				String sql = "CALL sp_obtenerEditorial(?)";
 				this.abrirConexion();
 				cs = conexion.prepareCall(sql);
-				cs.setInt(1,idautor);
+				cs.setInt(1,ideditorial);
 				rs= cs.executeQuery();
 				if(rs.next()) {
-					//Autor autor = new Autor();
-					autor = new Autor();
-					autor.setIdAutor(rs.getInt("idautor"));
-					autor.setNombre(rs.getString("nombre"));
-					autor.setNacionalidad(rs.getString("nacionalidad"));
+					
+					editorial = new Editorial();
+					editorial.setIdEditorial(rs.getInt("ideditorial"));
+					editorial.setNombre(rs.getString("nombre"));
+					editorial.setContacto(rs.getString("contacto"));
+					editorial.setTelefono(rs.getString("telefono"));
 					this.cerrarConexion();
-					return autor;
+					return editorial;
 					
 				}
 				return null;
@@ -89,33 +94,34 @@ public class EditorialesModel extends conexion{
 			
 		}
 
-		public int modificarAutor(Autor autor) throws SQLException {
+		public int modificarEditorial(Editorial editorial) throws SQLException {
 			try {
 				int filasAfectadas = 0;
-				String sql = "CALL sp_modificarAutor(?,?,?)";
+				String sql = "CALL sp_modificarEditorial(?,?,?,?)";
 				this.abrirConexion();
 				cs = conexion.prepareCall(sql);
-				cs.setInt(1, autor.getIdAutor());
-				cs.setString(2, autor.getNombre());
-				cs.setString(3, autor.getNacionalidad());
+				cs.setInt(1, editorial.getIdEditorial());
+				cs.setString(2, editorial.getNombre());
+				cs.setString(3, editorial.getContacto());
+				cs.setString(3, editorial.getTelefono());
 				filasAfectadas = cs.executeUpdate();
 				this.cerrarConexion();
 				return filasAfectadas;
 			} catch (SQLException ex) {
-				Logger.getLogger(AutoresModel.class.getName()).log(Level.SEVERE, null, ex);
+				Logger.getLogger(EditorialesModel.class.getName()).log(Level.SEVERE, null, ex);
 				this.cerrarConexion();
 				return 0;
 			}
 		}
 
 		
-		public int eliminarAutor(int idautor) throws SQLException {
+		public int eliminarEditorial(int ideditorial) throws SQLException {
 			try {
 				int filasAfectadas = 0;
-				String sql ="CALL sp_eliminarAutor(?)";
+				String sql ="CALL sp_eliminarEditorial(?)";
 				this.abrirConexion();
 				cs = conexion.prepareCall(sql);
-				cs.setInt(1,idautor);
+				cs.setInt(1,ideditorial);
 				filasAfectadas = cs.executeUpdate();
 				this.cerrarConexion();
 				return filasAfectadas;

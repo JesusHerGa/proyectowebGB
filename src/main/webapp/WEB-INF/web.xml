@@ -10,6 +10,14 @@
     <servlet-name>AutoresController</servlet-name>
     <url-pattern>/AutoresController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>EditorialesController</servlet-name>
+    <servlet-class>com.unu.proyectwebGB.controllers.EditorialesController</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>EditorialesController</servlet-name>
+    <url-pattern>/EditorialesController</url-pattern>
+</servlet-mapping>
   <display-name>proyectwebGB</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

@@ -8,19 +8,38 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet"
+href="assets/css/bootstrap.min.css">
+<script src="assets/js/bootstrap.min.css.js">
+</script>
+
+<script >
+function eliminar(id) {
+	if(confirm("Desea Eliminar el registro")== true){
+		location.href= "EditorialesController?op=eliminar&id="+id;
+	}
+	else{
+		
+	}
+		
+	
+}
+</script>
+
 <title>ListarEditores</title>
 
 
 <%
-String url = "http://localhost:8080/proyectwebGB/";
+String url = "http://localhost:8081/proyectwebGB/";
 %>
-<a type = "button" href = "<%=url%>EditorialesController?op=nuevo">  Nueva Editorial</a>
+<div class="container">
+
+<a type = "button" class= "btn btn-primary" href = "<%=url%>EditorialesController?op=nuevo">  Nueva Editorial</a>
 
 
-
-
-<table id="tabla" border="1">
-	 <thead>
+<table class="table">
+  <thead class="table-dark">
+	 
 		 <tr>
 			<th>Codigo del Editorial</th>
 			<th>NOmbre</th>
@@ -31,20 +50,21 @@ String url = "http://localhost:8080/proyectwebGB/";
 	 </thead>
 	 <tbody> 
 		<%
-		List<Editorial> listaAutores = (List<Editorial>) request.getAttribute("listaEditoriales");
+		List<Editorial> listaEditores = (List<Editorial>) request.getAttribute("listaEditores");
         
         // Verificar si la lista no es nula
-        if (listaEditoriales != null) {
+        if (listaEditores != null) {
             // Iterar sobre la lista de autores
-            for (Editorial editorial : listaEditoriales) {
+            for (Editorial editorial : listaEditores) {
         %>
             <tr>
 				 <td><%= editorial.getIdEditorial()%></td>
-				 <td><%= autor.getNombre()%></td>
-				 <td><%= autor.getNacionalidad() %></td>
+				 <td><%= editorial.getNombre() %></td>
+				 <td><%= editorial.getContacto() %></td>
+				 <td><%= editorial.getTelefono() %></td>
 				 <td>
-				 <a type = "button" href = "<%=url%>AutoresController?op=obtener&id=<%=autor.getIdAutor()%>">modificar</a>
-				 <a type = "button" href = "<%=url%>AutoresController?op=eliminar&id=<%=autor.getIdAutor()%>">eliminar</a>
+				 <a type = "button" class="btn btn-warning" href = "<%=url%>EditorialesController?op=obtener&id=<%=editorial.getIdEditorial()%>">modificar</a>
+				 <a href="javascript:eliminar('<%=editorial.getIdEditorial()%>')" class="btn btn-danger"> Eliminar </a>
 				 </td>
 			 </tr>
         <%
@@ -53,6 +73,7 @@ String url = "http://localhost:8080/proyectwebGB/";
         %>
         
          	 <tr>
+				 <td>No hay datos</td>
 				 <td>No hay datos</td>
 				 <td>No hay datos</td>
 				 <td>No hay datos</td>
@@ -68,7 +89,7 @@ String url = "http://localhost:8080/proyectwebGB/";
  	
 
  </table>
-<a type = "button" href = "<%=url%>AutoresController">  Volver</a>
+<a type = "button" class= "btn btn-secondary" href = "<%=url%>index.jsp">  Volver al Menu</a>
 </head>
 <body>
 

@@ -28,12 +28,13 @@ public class AutoresController extends HttpServlet {
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		response.setContentType("text/html;charset=UTF-8");
+		
+		String operacion = request.getParameter("op");
 		if (request.getParameter("op") == null) {
 			listar(request, response);
 			return;
 		}
-		String operacion = request.getParameter("op");
 		switch (operacion) {
 
 		case "listar":

@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class EditorialesController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	EditorialesModel modelo = new EditorialesModel();
+	EditorialesModel modeloedt = new EditorialesModel();
 	
 	public EditorialesController() {
 		super();
@@ -24,11 +24,12 @@ public class EditorialesController extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		response.setContentType("text/html;charset=UTF-8");
+		String operacion = request.getParameter("op");
 		if (request.getParameter("op") == null) {
 			listar(request, response);
 			return;
 		}
-		String operacion = request.getParameter("op");
 		switch (operacion) {
 
 		case "listar":
@@ -58,13 +59,13 @@ public class EditorialesController extends HttpServlet {
 
 	private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			request.setAttribute("listaEditoriales", modelo.listarEditorial());
-			Iterator<Autor> it = modelo.listarEditoriales().iterator();
+			request.setAttribute("listaEditores", modeloedt.listarEditoriales());
+			Iterator<Editorial> it = modeloedt.listarEditoriales().iterator();
 			while (it.hasNext()) {
-				Editorial a = it.next();
-				System.out.println(a.getIdEditorial() + " " + a.getNombre() + " " + a.getContacto()+ " " + a.getTelefono());
+				Editorial e = it.next();
+				System.out.println(e.getIdEditorial() + " " + e.getNombre() + " " + e.getContacto()+ " " + e.getTelefono());
 			}
-			request.getRequestDispatcher("/autores/listaAutores.jsp").forward(request, response);
+			request.getRequestDispatcher("/editoriales/listaEditores.jsp").forward(request, response);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -73,18 +74,19 @@ public class EditorialesController extends HttpServlet {
 	private void insertar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		try {
-			Autor miAutor= new Autor();
-			miAutor.setNombre(request.getParameter("nombre"));
-			miAutor.setNacionalidad(request.getParameter("nacionalidad"));
-			if(modelo.insertarAutor(miAutor)>0) {
-				request.getSession().setAttribute("exito","autor registrado satisfactoriamente");
+			Editorial miEditorial= new Editorial();
+			miEditorial.setNombre(request.getParameter("nombre"));
+			miEditorial.setContacto(request.getParameter("contacto"));
+			miEditorial.setTelefono(request.getParameter("telefono"));
+			if(modeloedt.insertarEditorial(miEditorial)>0) {
+				request.getSession().setAttribute("exito","editorial registrada satisfactoriamente");
 								
 			}
 			else {
-				request.getSession().setAttribute("fracaso","autor NO registrado satisfactoriamente");
+				request.getSession().setAttribute("fracaso","editorial NO registrada satisfactoriamente");
 				
 			}
-			response.sendRedirect(request.getContextPath()+"/AutoresController?op=listar");
+			response.sendRedirect(request.getContextPath()+"/EditorialesController?op=listar");
 		} catch (Exception ex) {
 			ex.getStackTrace();
 		}
@@ -93,10 +95,10 @@ public class EditorialesController extends HttpServlet {
 
 		try {
 			String id = request.getParameter("id");
-			Autor miAutor= modelo.obtenerAutor(Integer.parseInt(id));
-			if(miAutor!= null) {
-				request.setAttribute("autor", miAutor);
-				request.getRequestDispatcher("/autores/editarAutor.jsp").forward(request, response);
+			Editorial miEditorial= modeloedt.obtenerEditorial(Integer.parseInt(id));
+			if(miEditorial!= null) {
+				request.setAttribute("editorial", miEditorial);
+				request.getRequestDispatcher("/editoriales/editarEditorial.jsp").forward(request, response);
 				}
 			else {
 				response.sendRedirect(request.getContextPath()+"/error404.jsp");
@@ -109,20 +111,21 @@ public class EditorialesController extends HttpServlet {
 	private void modificar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		try {
-			Autor miAutor= new Autor();
-			miAutor.setIdAutor(Integer.parseInt(request.getParameter("id")));
-			miAutor.setNombre(request.getParameter("nombre"));
-			miAutor.setNacionalidad(request.getParameter("nacionalidad"));
-			request.setAttribute("autor", miAutor);
-			if(modelo.modificarAutor(miAutor)>0) {
-				request.getSession().setAttribute("exito","autor registrado satisfactoriamente");
+			Editorial miEditorial= new Editorial();
+			miEditorial.setIdEditorial(Integer.parseInt(request.getParameter("id")));
+			miEditorial.setNombre(request.getParameter("nombre"));
+			miEditorial.setContacto(request.getParameter("contacto"));
+			miEditorial.setTelefono(request.getParameter("telefono"));
+			request.setAttribute("editorial", miEditorial);
+			if(modeloedt.modificarEditorial(miEditorial)>0) {
+				request.getSession().setAttribute("exito","editorial modificado satisfactoriamente");
 								
 			}
 			else {
-				request.getSession().setAttribute("fracaso","autor NO registrado satisfactoriamente");
+				request.getSession().setAttribute("fracaso","editorial NO modificada satisfactoriamente");
 				
 			}
-			response.sendRedirect(request.getContextPath()+"/AutoresController?op=listar");
+			response.sendRedirect(request.getContextPath()+"/EditorialesController?op=listar");
 		} catch (Exception ex) {
 			ex.getStackTrace();
 		}
@@ -130,14 +133,14 @@ public class EditorialesController extends HttpServlet {
 	
 	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		try {
-			int idautor = Integer.parseInt(request.getParameter("id"));
-			if(modelo.eliminarAutor(idautor)> 0) {
-				request.getSession().setAttribute("exito","autor eliminado satisfactoriamente");
+			int ideditorial = Integer.parseInt(request.getParameter("id"));
+			if(modeloedt.eliminarEditorial(ideditorial)> 0) {
+				request.getSession().setAttribute("exito","editorial eliminado satisfactoriamente");
 			}
 			else {
-				request.getSession().setAttribute("fracaso","autor NO eliminado satisfactoriamente");
+				request.getSession().setAttribute("fracaso","editorial NO eliminado satisfactoriamente");
 			}
-			response.sendRedirect(request.getContextPath()+"/AutoresController?op=listar");
+			response.sendRedirect(request.getContextPath()+"/EditorialesController?op=listar");
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

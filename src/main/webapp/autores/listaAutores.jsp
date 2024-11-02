@@ -31,7 +31,7 @@ function eliminar(id) {
 
 
 <%
-String url = "http://localhost:8080/proyectwebGB/";
+String url = "http://localhost:8081/proyectwebGB/";
 %>
 
 <div class="container">
@@ -89,7 +89,7 @@ String url = "http://localhost:8080/proyectwebGB/";
  	
 
  </table>
-<a type = "button" class="btn btn-secondary" href = "<%=url%>AutoresController">  Actualizar</a>
+<a type = "button" class="btn btn-secondary" href = "<%=url%>index.jsp">  Volver al Menu </a>
 </div>
 
 

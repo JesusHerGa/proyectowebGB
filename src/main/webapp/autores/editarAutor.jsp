@@ -16,7 +16,7 @@ href="assets/css/bootstrap.min.css">
 
 
 	<%
-	String url = "http://localhost:8080/proyectwebGB/";
+	String url = "http://localhost:8081/proyectwebGB/";
 	Autor autor;
 	if(request.getAttribute("autor")== null)
 		autor = new Autor();
