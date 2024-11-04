@@ -37,6 +37,7 @@ String url = "http://localhost:8081/proyectwebGB/";
 <div class="menu">
     <a href="<%=url%>AutoresController">Gestión de Autores</a>
     <a href="<%=url %>EditorialesController">Gestión de Editoriales</a>
+    <a href="<%=url%>GenerosController">Gestión de Generos</a>
 </div>
 
 </body>

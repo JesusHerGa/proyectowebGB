@@ -4,20 +4,20 @@ import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.util.Iterator;
 
+import com.unu.proyectwebGB.beans.Genero;
+import com.unu.proyectwebGB.models.GenerosModel;
 
-import com.unu.proyectwebGB.beans.Editorial;
-import com.unu.proyectwebGB.models.EditorialesModel;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class EditorialesController extends HttpServlet {
+public class GenerosController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	EditorialesModel modeloedt = new EditorialesModel();
+	GenerosModel modelognr = new GenerosModel();
 	
-	public EditorialesController() {
+	public GenerosController() {
 		super();
 	}
 
@@ -38,7 +38,7 @@ public class EditorialesController extends HttpServlet {
 
 		case "nuevo":
 
-			request.getRequestDispatcher("/editoriales/nuevoEditorial.jsp").forward(request, response);
+			request.getRequestDispatcher("/generos/nuevoGenero.jsp").forward(request, response);
 			break;
 		case "insertar":
 			insertar(request, response);
@@ -59,13 +59,13 @@ public class EditorialesController extends HttpServlet {
 
 	private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			request.setAttribute("listaEditores", modeloedt.listarEditoriales());
-			Iterator<Editorial> it = modeloedt.listarEditoriales().iterator();
+			request.setAttribute("listaGeneros", modelognr.listarGeneros());
+			Iterator<Genero> it = modelognr.listarGeneros().iterator();
 			while (it.hasNext()) {
-				Editorial e = it.next();
-				System.out.println(e.getIdEditorial() + " " + e.getNombre() + " " + e.getContacto()+ " " + e.getTelefono());
+				Genero e = it.next();
+				System.out.println(e.getIdGenero() + " " + e.getNombre() + " " + e.getDescripcion()+ " " );
 			}
-			request.getRequestDispatcher("/editoriales/listaEditores.jsp").forward(request, response);
+			request.getRequestDispatcher("/generos/listaGeneros.jsp").forward(request, response);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -74,19 +74,18 @@ public class EditorialesController extends HttpServlet {
 	private void insertar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		try {
-			Editorial miEditorial= new Editorial();
-			miEditorial.setNombre(request.getParameter("nombre"));
-			miEditorial.setContacto(request.getParameter("contacto"));
-			miEditorial.setTelefono(request.getParameter("telefono"));
-			if(modeloedt.insertarEditorial(miEditorial)>0) {
-				request.getSession().setAttribute("exito","editorial registrada satisfactoriamente");
+			Genero miGenero= new Genero();
+			miGenero.setNombre(request.getParameter("nombre"));
+			miGenero.setDescripcion(request.getParameter("descripcion"));
+			if(modelognr.insertarGenero(miGenero)>0) {
+				request.getSession().setAttribute("exito","Genero registrado satisfactoriamente");
 								
 			}
 			else {
-				request.getSession().setAttribute("fracaso","editorial NO registrada satisfactoriamente");
+				request.getSession().setAttribute("fracaso","Genero NO registrada satisfactoriamente");
 				
 			}
-			response.sendRedirect(request.getContextPath()+"/EditorialesController?op=listar");
+			response.sendRedirect(request.getContextPath()+"/GenerosController?op=listar");
 		} catch (Exception ex) {
 			ex.getStackTrace();
 		}
@@ -95,10 +94,10 @@ public class EditorialesController extends HttpServlet {
 
 		try {
 			String id = request.getParameter("id");
-			Editorial miEditorial= modeloedt.obtenerEditorial(Integer.parseInt(id));
-			if(miEditorial!= null) {
-				request.setAttribute("editorial", miEditorial);
-				request.getRequestDispatcher("/editoriales/editarEditorial.jsp").forward(request, response);
+			Genero miGenero= modelognr.obtenerGenero(Integer.parseInt(id));
+			if(miGenero!= null) {
+				request.setAttribute("genero", miGenero);
+				request.getRequestDispatcher("/generos/editarGenero.jsp").forward(request, response);
 				}
 			else {
 				response.sendRedirect(request.getContextPath()+"/error404.jsp");
@@ -111,21 +110,20 @@ public class EditorialesController extends HttpServlet {
 	private void modificar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		try {
-			Editorial miEditorial= new Editorial();
-			miEditorial.setIdEditorial(Integer.parseInt(request.getParameter("id")));
-			miEditorial.setNombre(request.getParameter("nombre"));
-			miEditorial.setContacto(request.getParameter("contacto"));
-			miEditorial.setTelefono(request.getParameter("telefono"));
-			request.setAttribute("editorial", miEditorial);
-			if(modeloedt.modificarEditorial(miEditorial)>0) {
-				request.getSession().setAttribute("exito","editorial modificado satisfactoriamente");
+			Genero miGenero= new Genero();
+			miGenero.setIdGenero(Integer.parseInt(request.getParameter("id")));
+			miGenero.setNombre(request.getParameter("nombre"));
+			miGenero.setDescripcion(request.getParameter("descripcion"));
+			request.setAttribute("genero", miGenero);
+			if(modelognr.modificarGenero(miGenero)>0) {
+				request.getSession().setAttribute("exito","Genero modificado satisfactoriamente");
 								
 			}
 			else {
-				request.getSession().setAttribute("fracaso","editorial NO modificada satisfactoriamente");
+				request.getSession().setAttribute("fracaso","Genero NO modificado satisfactoriamente");
 				
 			}
-			response.sendRedirect(request.getContextPath()+"/EditorialesController?op=listar");
+			response.sendRedirect(request.getContextPath()+"/GenerosController?op=listar");
 		} catch (Exception ex) {
 			ex.getStackTrace();
 		}
@@ -133,12 +131,12 @@ public class EditorialesController extends HttpServlet {
 	
 	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		try {
-			int ideditorial = Integer.parseInt(request.getParameter("id"));
-			if(modeloedt.eliminarEditorial(ideditorial)> 0) {
-				request.getSession().setAttribute("exito","editorial eliminado satisfactoriamente");
+			int idgenero = Integer.parseInt(request.getParameter("id"));
+			if(modelognr.eliminarGenero(idgenero)> 0) {
+				request.getSession().setAttribute("exito","Genero eliminado satisfactoriamente");
 			}
 			else {
-				request.getSession().setAttribute("fracaso","editorial NO eliminado satisfactoriamente");
+				request.getSession().setAttribute("fracaso","Genero NO eliminado satisfactoriamente");
 			}
 			response.sendRedirect(request.getContextPath()+"/EditorialesController?op=listar");
 		} catch (Exception e) {

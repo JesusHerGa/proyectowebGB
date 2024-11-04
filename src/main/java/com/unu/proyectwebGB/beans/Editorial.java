@@ -1,14 +1,7 @@
 package com.unu.proyectwebGB.beans;
 
 public class Editorial {
-	private int idEditorial;
-	private String nombre;
-	private String contacto;
-	private String telefono;
 	
-	public Editorial() {
-		super();
-	}
 	public Editorial(int idEditorial, String nombre, String contacto, String telefono) {
 		super();
 		this.idEditorial = idEditorial;
@@ -16,6 +9,17 @@ public class Editorial {
 		this.contacto = contacto;
 		this.telefono = telefono;
 	}
+	
+	
+	private int idEditorial;
+	private String nombre;
+	private String contacto;
+	private String telefono;
+	
+	public Editorial() {
+		this(0, "", "","");
+	}
+	
 	public int getIdEditorial() {
 		return idEditorial;
 	}

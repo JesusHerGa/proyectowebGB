@@ -10,6 +10,7 @@
     <servlet-name>AutoresController</servlet-name>
     <url-pattern>/AutoresController</url-pattern>
   </servlet-mapping>
+
   <servlet>
     <servlet-name>EditorialesController</servlet-name>
     <servlet-class>com.unu.proyectwebGB.controllers.EditorialesController</servlet-class>
@@ -18,6 +19,18 @@
     <servlet-name>EditorialesController</servlet-name>
     <url-pattern>/EditorialesController</url-pattern>
 </servlet-mapping>
+
+ <servlet>
+    <description></description>
+    <display-name>GenerosController</display-name>
+    <servlet-name>GenerosController</servlet-name>
+    <servlet-class>com.unu.proyectwebGB.controllers.GenerosController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GenerosController</servlet-name>
+    <url-pattern>/GenerosController</url-pattern>
+  </servlet-mapping>
+  
   <display-name>proyectwebGB</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
